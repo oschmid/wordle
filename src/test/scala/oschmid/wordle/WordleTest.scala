@@ -14,4 +14,9 @@ class WordleTest {
       assertEquals(Some(v), m.get(k.charAt(0)))
     }
   }
+
+  @Test def testConstrain(): Unit = {
+    val r = Wordle.constrain(Seq("soare", "arise"), "soare", "10112")
+    assertEquals(Seq("arise"), r)
+  }
 }
