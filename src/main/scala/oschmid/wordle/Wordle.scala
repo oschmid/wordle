@@ -1,9 +1,42 @@
 package oschmid.wordle
 
 import scala.collection.mutable.{Map => MMap}
+import scala.io.StdIn.readLine
 import scala.math.log10
 
 object Wordle {
+
+  def main(args : Array[String]): Unit = play()
+
+  def play(): Unit = {
+    var i = 1
+    var corpus = Possible.answers
+    while (corpus.length > 1 && i <= 6) {
+      val query = choose(corpus)
+      println(query)
+      i += 1
+      corpus = constrain(corpus, query, readLine())
+    }
+    if (corpus.length == 1) {
+      println(corpus.head)
+    }
+  }
+
+  def play(answer : String, verbose : Boolean = false): Unit = {
+    var i = 1
+    var corpus = Possible.answers
+    while (corpus.length > 1 && i <= 6) {
+      val query = choose(corpus)
+      if (verbose) {
+        println(query)
+      }
+      i += 1
+      corpus = constrain(corpus, query, guess(query, answer))
+    }
+    if (corpus.length == 1 && verbose) {
+      println(corpus.head)
+    }
+  }
 
   /**
    * Maximises (a slight approximation to) the differential entropy of the guesses over the corpus.
