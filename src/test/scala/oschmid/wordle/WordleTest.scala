@@ -19,4 +19,9 @@ class WordleTest {
     val r = Wordle.constrain(Seq("soare", "arise"), "soare", "10112")
     assertEquals(Seq("arise"), r)
   }
+
+  @Test def testChoose(): Unit = {
+    val bestFirstGuess = Wordle.choose(Possible.answers)
+    assertEquals("soare", bestFirstGuess)
+  }
 }
